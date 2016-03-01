@@ -1,0 +1,301 @@
+\chapter{Hardware}
+\label{cha:Hardware}
+
+
+\section{Hinweise zum Nachbau der Hardware}
+Dieses Kapitel der Dokumentation beschreibt die für meine Anwendung von
+\Bezeichnung\ aufgebaute Hardware, ein Touchpanel mit einem \RPi\ Modell B+ und
+allen notwendigen Komponenten, die zur Verwendung als Audioquelle in der
+Musikanlage unseres Faschingswagens notwendig waren.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=4cm]{elektrischeSpannung.png}
+\caption{Gefährliche elektrische Spannung}
+%\label{fig:elektrSpann}
+\end{figure}
+
+Für den beschriebenen Aufbau wurde eine Spannungsversorgung über 12V-Bleiakkus
+verwendet (große LKW-Batterien). Über einen 12V/230V-Spannungswandler wird die
+Betriebsspannung für die im RPi-Touchpanel verbauten Netzteile erzeugt.
+
+\begin{bclogo}[arrondi = 0.2, logo = \bcinfo, ombre = true, epOmbre = 0.25, couleurOmbre = black !30,blur]{Vorsicht!}
+Ich appelliere an die Vernunft der Leserschaft, den Nachbau nur vorzunehmen,
+wenn man sich folgender Gefahren bewusst ist und das fachliche Wissen und
+handwerkliche Können besitzt, sie zu vermeiden:
+\begin{itemize}
+\item ausgehende Gefahr von einer 230V-Wechselspannung (gefährlicher Stromschlag)
+\item ausgehende Gefahr von hohen Strömen aus Autobatterien (Kurzschlussfall!)
+\end{itemize}
+\end{bclogo}
+
+\textbf{Lizenz:}\\
+Der hier beschiebene elektrische Aufbau erreicht nicht die schöpferische Tiefe,
+um über eine Lizenz geschützt werden zu müssen. Vielmehr beruht er auf den
+allgemein bekannten Fakten für die Inbetriebnahme eines \RPi\ sowie auf den
+Bedienungsanleitungen der verwendeten Einzelkomponenten.\\
+
+
+\section{Blockschaltbild}
+Eine kurze funktionale Beschreibung des Aufbaus ist bereits in Kapitel
+\ref{sec:Einfuehrung_Hardware} erfolgt. Aufgrund einer äußerst kurzfristigen
+Änderung der Rahmenbedingungen musste die Stromversorgung neu gestaltet werden.
+Daher wurde (gezwungenermaßen aus Zeit- und Materialmangel) auf eine saubere
+Netzabschaltung verzichtet. Die Spannungsversorgung der Einzelkomponenten
+(Siemens IFP, \Ligawo, \RPi) kann jedoch über einzelne Schalter getrennt
+zugeschaltet werden, um die Komponenten in einer definierten Reihenfolge in
+Betrieb zu nehmen. Siehe dazu auch Kapitel \ref{subsec:PowerSequencer},
+Abschnitt "`Power Sequencer"'\\
+Für einen vollständigen Überblick hier ein Blockschaltbild:
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{Blockschaltbild.pdf}
+\caption{Blockschaltbild}
+\label{fig:Blockschaltbild}
+\end{figure}
+
+
+\newpage
+\section{Stückliste}
+Folgende Komponenten wurden für den elektrischen Aufbau verwendet. Das Material
+für den Holzrahmen (Holz, Schrauben, Montagewinkel) ist in der Stückliste nicht
+aufgeführt.
+
+\begin{table}[!h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|p{0.45\textwidth}|}
+\toprule[2pt]
+\textbf{Anz.} & \textbf{Lieferant} & \textbf{Bestellnummer} & \textbf{Artikel}\\
+\midrule[2pt]
+1 & Vitamin B \smiley{wink} & --- & Siemens IFP 19" MultiTouch\\
+\hline
+1 & Vitamin B \smiley{wink} & --- & Deutronic Einbaunetzteil 24V / 1.8A\\
+\hline
+1 & amazon & Ligawo 6518725 & Ligawo 6518725 HDMI Extractor\\
+\hline
+1 & www.raspiprojekt.de & 35001 & \RPi\ Modell B+\\
+\hline
+1 & reichelt & GOO 44009 & 5V-USB-Netzteil, 2A (USB-Ladeadapter)\\
+\hline
+1 & reichelt & KES 1 & Kaltgeräteeinbaustecker, waagerecht befestigt\\
+\hline
+3 & reichelt & WIPPE 1801.1146 & Marquardt Wippschalter 1-pol\\
+\hline
+1 & reichelt & NEUTRIK NF2DB-2 & Cincheinbaubuchse, Farbkennring rot\\
+\hline
+1 & reichelt & NEUTRIK NF2DB-9 & Cincheinbaubuchse, Farbkennring weiß\\
+\hline
+1 & reichelt & NEUTRIK NE-8FDP & Flanschbuchse RJ45 auf RJ45\\
+\hline
+2 & reichelt & NEUTRIK NAUSB-WB & USB-Einbaudurchgangsbuchse, innen USB-B, außen USB-A\\
+\hline
+1 & reichelt & AK HDMI-DVI 1,0 & HDMI-Stecker auf DVI-D Stecker 1,0m\\
+\hline
+1 & reichelt & AK HDMI 0,50G ET & HDMI Kabel Stecker/Stecker 0,5m\\
+\hline
+1 & reichelt & AVK 128 & 2x Cinchstecker auf 2x Cinchstecker 1,5m \\
+\hline
+3 & reichelt & AK 672/HSF-0,5 & USB2.0-Kabel, A-Stecker auf B-Stecker 0,5m\\
+\hline
+1 & reichelt & PATCH-C7 05 MA & 0,5m Cat.7 PiMF-Patchkabel, magenta, RJ45\\
+%\hline
+\bottomrule[2pt]
+\end{tabular}
+\vspace{0.5cm}
+\caption{Stückliste}
+\label{tab:Stueckliste}
+\end{table}
+
+
+\newpage
+\section{Ausblick und mögliche Verbesserungen}
+Grundsätzlich ist die beschriebene Umsetzung lediglich als Anregung zu
+verstehen: Es wurde hier bewusst auf eine massive Bauweise und hinsichtlich der
+mechanischen Beanspruchung für die geplante Anwendung (Faschingswagen!) auf
+robuste Komponenten wie ein industrielles Touchpanel Wert gelegt. Das
+Innenleben selbst konnte dann entspechend filigraner umgesetzt werden.\\
+Je nach Verwendung und Einsatzort eignet sich auch jedes beliebige andere
+Display mit HDMI-Anschluss mit einer Auflösung von mindestens 1366x768 Pixeln.
+Anstelle der Touchfunktionalität können auch eine ganz normale Tastatur und
+Maus benutzt werden.
+
+Nachdem zunächst geplant war, eine 230V-Stromversorgung über ein am Bulldog
+angeschlossenens Zapfwellenaggregat herzustellen, und mit großen Verstärkern zu
+arbeiten, musste ich feststellen, dass die Drehrichtung der Zapfwelle vorne
+genau falsch herum war. Da das Aggregat Drehstrom erzeugt, muss auch die
+Drehrichtung stimmen. Man denke an eine Drehstrom-Kreissäge, deren Sägeblatt
+sich falsch herum dreht... Saugefährlich! Daher schaltete die
+Sicherungseinrichtung des Aggregates ab. \smiley{nosmile} Ein Anschluss des
+Aggregates an der Hinterseite des Bulldogs fällt aus, da ja dort der
+Faschingswagen hängt und das Aggregat der Deichsel im Wege ist.
+\smiley{nosmile}\\
+Gott sei Dank haben wir das Ganze eine Woche vor dem ersten Einsatz geprüft und
+festgestellt, dass es nicht geht. Daher wurde ein
+12V/230V-Sinus-Spannungswandler mit 1500W Dauerleistung bestellt, aber leider
+billigste Chinaware bei dem großen Online-Versand, der in Deutschland keine
+Steuern bezahlt. Ausgepackt, angeschlossen, geht nicht! \smiley{nosmile} Das
+Glump daraufhin sofort wieder zurückgeschickt.
+
+\textbf{Also:} Umbau am Tag vor dem ersten Faschingszug auf die althergebrachte
+Weise mit Autoendstufen und einem kleinen Spannungswandler mit (angeblich) 300
+Watt. Deshalb auch die relativ chaotische und undurchdachte Spannungsversorgung
+im RPi-Touchpanel. Anschließend noch drei Endstufen mit Frequenzweiche in den
+Faschingswagen gespaxt, um halb sieben abends dann eingeschaltet, ausgepegelt
+und eine Halbe Bier aufgemacht. \smiley{smile}
+
+\begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
+Wenn die folgenden Punkte umgesetzt werden, könnte der ganze Aufbau sogar noch
+gut werden!
+\end{bclogo}
+
+\begin{itemize}
+\item \textbf{Saubere 230V-Versorgung mit Hauptschalter}\\
+selbstredend!
+\label{subsec:PowerSequencer}
+\item \textbf{Power Sequencer}\\
+Derzeit tritt das Problem auf, dass \textit{manchmal} nach dem Start des \RPi\
+kein Ton ausgegeben wird, obwohl eigentlich alle Komponenten eingeschaltet sind.
+Ich vermute die Ursache im \Ligawo. Im deutschsprachigen RaspberryPi-Forum
+schildert ein Anwender nämlich ein ähnliches Problem:\\
+\url{http://www.forum-raspberrypi.de/Thread-problem-mit-hdmi-audio-extractor-ligawo?highlight=Ligawo+Audio}\\
+Dies kann \textit{meistens} umgangen werden, indem zuerst der HDMI-Bildschirm,
+dann der \Ligawo\ und zuletzt der \RPi\ und alles im richtigen Zeitabstand
+eingeschaltet wird. \textit{So ganz sicher bin ich mir da allerdings nicht, da
+selbst ich schon drei aufeinanderfolgende fehlgeschlagene Boots erlebt habe.
+\smiley{nosmile}}\\
+Möglicherweise könnte diese Einschaltreihenfolge mit einem Mikrocontroller
+automatisiert werden.
+\item \textbf{Sauberes Herunterfahren / USV}\\
+Die obige Mikrocontrollerschaltung könnte so erweitert werden, dass beim
+Ausschalten die Stromversorgung zum \RPi\ erst dann getrennt wird, wenn dieser
+vollständig heruntergefahren ist. Alternativ wäre der Einbau einer USV für den
+\RPi\ noch eine Option, siehe \url{http://www.piusv.de}
+\item \textbf{\RPi\ Modell A oder Pi Zero verwenden}
+Wenn das verwendete Display einen eingebauten USB-Hub hat (so wie mein
+Siemens-Panel), kann auch ein \RPi-Modell mit nur einer USB-Buchse verwendet
+werden. Man stellt eine USB-Verbindung vom \RPi\ zum USB-Hub des Displays her
+und verbindet dessen Ausgangs-Ports mit den im Gehäuse verbauten USB-Buchsen.
+Da bringe ich dann endlich meinen \RPi\ Modell A+ sinnvoll unter.
+\smiley{smile}
+\end{itemize}
+
+
+\section{Bilder vom Aufbau}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{RPi_YAMuPlay_Frontansicht.JPG}
+\caption{Frontansicht}
+\label{fig:Frontansicht}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{RPi_YAMuPlay_Innenansicht_mit_DVI-Kabel.JPG}
+\caption{Innenansicht}
+\label{fig:Innenansicht}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{RPi_YAMuPlay_Innenansicht_RPi+Ligawo.JPG}
+\caption{Detailansicht \RPi\ und \Ligawo}
+\label{fig:Detailansicht}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{RPi_YAMuPlay_Buchsen_02.JPG}
+\caption{Buchsen für Audio, USB und LAN}
+\label{fig:Buchsen}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{RPi_YAMuPlay_Schalter.JPG}
+\caption{Schalter für Spannungsversorgung}
+\label{fig:Schalter}
+\end{figure}
+\clearpage
+
+
+\section{Gesamtaufbau der Musikanlage auf dem Faschingswagen}
+Dieser Abschnitt ist etwas "`{off topic}"', denn er behandelt keinerlei Themen
+bezüglich des \RPi. Vielmehr wird hier kurz der Gesamtaufbau der Musikanlage
+bestehend aus dem vorgestellten RPi-Touchpanel und klassischen
+Car-Hifi-Komponenten beschrieben. Wer sich dafür nicht interessiert, kann diesen
+Teil bedenkenlos überspringen...
+
+Auf dem Faschingswagen wurde im Prinzip eine Car-Hifi-Anlage aufgebaut, deren
+Lautstärke und Klang jedoch nicht von einem normalen Autoradio (head unit),
+sondern mit Hilfe der Frequenzweiche Sony XEC-505 gesteuert wurde. Aufgrund
+der Verwendung der Software \filenam{omxplayer.bin} auf dem \RPi\ greift dort
+der ALSA-Mixer nicht. Eine Lautstärkeregelung war deshalb softwaretechnisch
+nicht so leicht zu lösen. \textit{Auch hier lasse ich mich gerne eines Besseren
+belehren! \smiley{wink}} (\url{mailto:schlizbaeda@gmx.de})
+Vorteilhaft an dieser Lösung war jedenfalls, dass alle Lautsprecherpaare einzeln
+geregelt und ausgepegelt werden konnten.\\
+Die Funktion der Sony-Frequenzweiche ist auf deren Gehäuse als Blockschaltbild 
+dargestellt und zwar dermaßen gut, dass dieses Bild mehr sagt als 1000 Worte,
+siehe Abbildung \ref{fig:Frequenzweiche_02}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{Frequenzweiche_02.JPG}
+\caption{Frequenzweiche}
+\label{fig:Frequenzweiche_02}
+\end{figure}
+
+Aus dieser Skizze ergibt sich die Verkabelung der gesamten Musikanlage auf
+Abbildung \ref{fig:Blockschaltbild_Gesamtanlage}. Es ist dann -- Achtung:
+Unwort! -- \textit{nur} noch Fleißarbeit, das Ganze auf dem Faschingswagen
+umzusetzen.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{Gesamtanlage.pdf}
+\caption{Blockschaltbild der Musikanlage}
+\label{fig:Blockschaltbild_Gesamtanlage}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{Frequenzweiche_01.JPG}
+\caption{Bedieneinheit der Frequenzweiche}
+\label{fig:Frequenzweiche_01}
+\end{figure}
+\clearpage
+
+Zuletzt noch einige Bilder vom Faschingswagen:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.63\textwidth]{Gesamtanlage.jpg}
+\caption{Gesamtanlage auf dem Faschingswagen}
+\label{fig:Gesamtanlage}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{Gaudiwurm_Tattenhausen_01.jpg}
+\caption{18. Gaudiwurm Tattenhausen 31.01.2016 Aufstellung}
+\label{fig:Tattenhausen01}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{Gaudiwurm_Tattenhausen_03.jpg}
+\caption{18. Gaudiwurm Tattenhausen 31.01.2016 Seitenansicht}
+\label{fig:Tattenhausen03}
+\end{figure}
+\clearpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{Faschingszug_BadAibling_01.jpg}
+\caption{Faschingszug Bad Aibling 07.02.2016}
+\label{fig:BadAibling}
+\end{figure}
+
+\textbf{} % fett gedruckter :-) Leerstring, damit's das letzte Bild auf der Seite nach oben schiebt...
+

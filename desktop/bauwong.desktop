@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Bauwong n.e.V
+Comment=Mediaplayer für den Faschingswagen vom Bauwong n.e.V.
+Path=/home/pi/bauwong
+TryExec=/home/pi/bauwong/bauwong.py
+Exec=/home/pi/bauwong/bauwong.py
+Icon=/usr/share/pixmaps/xfce4-mixer.xpm
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true

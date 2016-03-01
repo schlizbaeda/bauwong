@@ -1,0 +1,465 @@
+\chapter{Software}
+\label{cha:Software}
+
+
+\section{Beschreibung und Bedienung von \Bezeichnung}
+Die Software \Bezeichnung\ \Version\ ist kein eigener Mediaplayer, sondern eine
+Bedieneroberfläche für den existierenden Kommandozeilen-Mediaplayer
+{\filenam{omxplayer.bin}, der in den meisten(?) Betriebssystem-Distributionen
+für den \RPi\ standardmäßig enthalten ist. Diese Oberfläche ist quasi eine
+"`Hülle"' -- oder auf englisch -- ein Wrapper für {\filenam{omxplayer.bin}. Der
+Sinn für die Programmierung von \Bezeichnung\ lag \ua darin, eine Plattform
+unter \textbf{Python3} zu schaffen, mit der man relativ einfach Mediendateien
+(Musik und Videos) unter Zuhilfenahme von {\filenam{omxplayer.bin} abspielen
+kann. Da \filenam{omxplayer.bin} als eigener Prozess gestartet wird und die
+Kommunikation mit \Bezeichnung\ über \textbf{D-Bus} erfolgt, findet das
+Abspielen aus der Sicht des übergestülpten Python-Programms im Hintergrund
+statt; in Python können währenddessen andere Aufgaben erledigt werden. Ein
+weiterer Vorteil liegt darin, dass \filenam{omxplayer.bin} hauptsächlich den
+GPU-Teil des Broadcom 2835 auf dem \RPi\ beansprucht und somit den CPU-Teil kaum
+belastet. Die CPU-Last beim Betrieb von \Bezeichnung liegt bei \ca 25\%-35\%, es
+bleiben genügend CPU-Ressourcen frei.\\
+Nachteilig ist jedoch, dass ALSA aufgrund der großen Hardwarenähe von
+\filenam{omxplayer.bin} nicht eingebunden ist und somit wirkungslos bleibt.
+Daher funktioniert weder der ALSA-Mixer von Raspbian, noch kann eine Soundkarte
+wie Hifiberry DAC+ eingesetzt werden. Die Audioausgabe kann daher nur über HDMI
+oder den Analoganschluss des \RPi\ erfolgen, eine Laustärkeregelung muss am
+Audioverstärker vorgenommen werden!
+
+Es gibt bereits genügend kompliziert zu bedienende Mediaplayer vor allem
+hinsichtlich der Erstellung, Änderung und Verwaltung von Playlists. Bereits
+in Kapitel \ref{sec:Einfuehrung_Software} in der Einführung habe ich die
+Problematik des Music Player Daemons angedeutet. So etwas ist nicht zu
+gebrauchen, wenn Änderungen \textit{schnell} vorgenommen werden sollen/müssen.
+Vielmehr ist eine intuitive Bedieneroberfläche erforderlich. Auch in
+\Bezeichnung\ kann diesbezüglich noch viel getan werden, das will ich gar nicht
+abstreiten. Mehrere Punkte dazu sind in Kapitel \ref{sect:Erweiterungen}
+aufgeführt.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{yamuplay_menu.png}
+\caption{Hauptfenster von \Bezeichnung\ mit geöffnetem Hauptmenü}
+\label{fig:yamuplay_menu}
+\end{figure}
+
+Das Hauptfenster von \Bezeichnung\ ist zweigeteilt, siehe Abbildung
+\ref{fig:yamuplay_menu}. In der linken Hälfte werden alle auf den
+angeschlossenen USB-Laufwerken enthaltenen Dateien und Verzeichnisse in einer
+hierarchischen Baumstruktur angezeigt, gewöhnliche Dateien in Normalschrift und
+Verzeichnisse in fetter Schrift. Ein Doppelklick auf ein Verzeichnis öffnet oder
+schließt es, eine gewöhnliche Datei wird der Playlist hinzugefügt. Mehrmaliges
+Hinzufügen der gleichen Datei zur Playlist ist natürlich möglich. \Bezeichnung\
+kann derzeit noch nicht unterscheiden, ob es sich dabei um eine abspielbare
+Mediendatei oder um einen anderen Dateityp (\zB eine Textdatei) handelt.\\
+Im unteren Bereich befinden sich Steuerelemente zur Dateisuche. Die Suche
+berücksichtigt derzeit nur die \textbf{Dateinamen}, nicht die Metadaten
+(\zB ID3-Tags) der Mediendateien. Dies würde ja eine Datenbank erfordern, auf
+die aus Performancegründen bewusst verzichtet wurde. \\
+Wird ein USB-Laufwerk entfernt oder ein weiteres angeschlossen, so wird die
+Baumstruktur entsprechend aktualisiert. Dateieinträge in der Playlist bleiben
+davon unangetastet!
+
+Der rechte Teil enthält die Playlist mit den aktivierten Mediendateien. Am
+rechten Rand befinden sich Schaltflächen, um einzelne Dateien in der Liste zu
+verschieben oder wieder ganz aus der Liste zu entfernen. Unterhalb der Playlist
+sind die Schaltflächen \textit{Play/Pause}, \textit{seek}, \textit{prev},
+\textit{next} und \textit{Stop}, die den Tasten eines CD-Spielers nachempfunden
+sind. Ein Doppelklick auf einen Titel in der Playlist springt sofort dorthin und
+spielt diesen Titel sofort ab.\\
+Zusätzlich ist unten ein Eingabefeld für die Transparenz (den sogenannten
+alpha-Wert) von Videos, die zwischen 0 (vollständig transparent, d.h.
+unsichtbar) und 255 (vollständig undurchsichtig) liegen kann. Grundsätzlich
+reagiert der Desktop auch bei deckender Anzeige von Videos auf Maus- \bzw 
+Touchereignisse ganz normal, die Eingabe muss allerdings "`blind"' erfolgen.
+Der Standardwert von 210 für die Transparenz lässt den Desktop und \Bezeichnung\
+jedoch leicht durchscheinen, so dass eine Bedienung noch möglich ist.
+
+Über das Menü von \Bezeichnung\ können in der Leiste \menuitem{Datei} Playlists
+geladen und gespeichert werden. Es wird der Standarddialog des Betriebssystems
+zur Dateiauswahl angezeigt, mit dem der Dateiname festgelegt werden kann. Das
+Dateiformat ist \Code{m3u}, eine Textdatei, in der jede Zeile eine Mediendatei
+enthält. Beim Abspeichern einer Playlist werden immer \textbf{alle} Elemente der
+Playlist in die Datei geschrieben, beim Laden werden alle Einträge der Datei an
+die aktuell bestehende Playlist \textbf{hinten angehängt}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{yamuplay_open.png}
+\caption{Dateidialog von \Bezeichnung\ zum Laden einer vorhandenen Playlist}
+\label{fig:yamuplay_open}
+\end{figure}
+
+Der Menüpunkt \menuitem{Hilfe\arrowright Info} zeigt eine sogenannte
+"`About-Box"' an, in der Informationen über die Software und die Lizenz
+angezeigt werden, siehe \ref{fig:yamuplay_about}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth]{yamuplay_about.png}
+\caption{About-Box von \Bezeichnung}
+\label{fig:yamuplay_about}
+\end{figure}
+
+\begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
+Da am Ende die Zeit davonlief (ich weiß, eine schlechte Ausrede \smiley{wink}),
+wurde die gesamte grafische Oberfläche von \Bezeichnung\ für eine Displaygröße
+von 1366x768 Pixeln "`optimiert"', d.h. es wird von einer Fensterhöhe von ca.
+720 Pixeln ausgegangen. Die Breite ist unkritischer.
+\end{bclogo}
+\clearpage
+
+
+\section{Bibliotheken und Module}
+Zur Installation von \Bezeichnung\ benötigt man folgende Bibliotheken und Module:
+
+\begin{table}[!h]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|l|l|p{0.45\textwidth}|}
+\toprule[2pt]
+\textbf{Modul} & \textbf{Version} & \textbf{Lizenz} & \textbf{Quelle}\\
+\midrule[2pt]
+\Code{python3-pip} & aktuell(?) & MIT-Lizenz & \Code{apt-get install python\textbf{3}-pip}\\
+\midrule[2pt]
+\Code{python-omxplayer-wrapper} & 0.0.2 & LGPL v3 & \url{https://github.com/willprice/python-omxplayer-wrapper}\\
+\hline
+\Code{python3-dbus} & 1.2.2-1 & MIT-Lizenz & \Code{apt-get install python3-dbus}\\
+\hline
+\Code{pyudev} & 0.18 & LGPL v2.1 & \url{https://github.com/pyudev}\\
+\hline
+\Code{six} & 1.10.0 & MIT-Lizenz & \url{https://pypi.python.org/pypi/six}\\
+\midrule[2pt]
+\Code{matchbox virtual keyboard} & aktuell(?) & LGPL v... & \url{https://github.com/mwilliams03/matchbox-keyboard.git}\\
+%\hline
+\bottomrule[2pt]
+\end{tabular}
+\vspace{0.5cm}
+\caption{In \Bezeichnung\ eingebundene Bibliotheken und Module}
+\label{tab:Bibliotheken}
+\end{table}
+
+\Bezeichnung\ selbst benötigt für seinen Betrieb nur die Module
+\Code{python-omxplayer-wrapper}, \Code{python3-dbus}, \Code{pyudev} und
+\Code{six}. Das Modul \Code{python\textbf{3}-pip} muss auf dem \RPi\ installiert
+werden, damit die vier genannten Python-Module wiederum richtig installiert
+werden können.\\
+Die Software \Code{matchbox virtual keyboard} ist nur dann notwendig, wenn keine
+reale Tastatur verwendet werden soll, so wie auf dem Faschingswagen.
+ 
+
+\section{Installation von \Bezeichnung\ auf dem \RPi}
+Dieser Abschnitt beschreibt die \textbf{vollständige} Installation von
+\Bezeichnung\ auf einem jungfräulichen Raspbian-System mit dem Ausgabestand
+\textit{wheezy} vom 05.05.2015, Imagedatei \filenam{2015-05-05-raspbian-wheezy.img}.
+Ich habe die Beschreibung möglichst detailliert gehalten, damit alle Leser die
+Sache durch- und nachvollziehen können, egal auf welchem Erfahrungsstand sie
+sich befinden. An den beschrieben Punkten hatte ich als grimmiger Python-Noob
+selbst meine Probleme!\\
+Grundsätzlich kann diese Installationsanleitung in fünf Bereiche aufgegliedert
+werden:
+\begin{itemize}
+\item Raspbian-Image auf eine SD-Karte (4GB oder größer) aufspielen und updaten
+\item \filenam{/boot/config.txt} anpassen
+\item \Bezeichnung\ und alle notwendigen Python-Module installieren
+\item Desktop des \RPi\ einrichten
+\item \filenam{matchbox virtual keyboard} installieren
+\end{itemize}
+
+\begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
+Für die Installation muss der \RPi\ zwingend einen Internetzugang erhalten.\\
+Zudem sollten zumindest am Anfang Tastatur und Maus angeschlossen sein. Die
+Interaktion mit dem \RPi\ kann im späteren Verlauf der Inbetriebnahme auch über
+\Code{ssh} erfolgen.
+\end{bclogo}
+
+
+\subsection{Raspbian-Image auf eine 4GB SD-Karte aufspielen und updaten}
+Die gesamte Installation wurde auf \textit{raspbian wheezy}, Ausgabestand
+05.05.2015 durchgeführt. Mittlerweile ist die Nachfolgeversion
+\textit{jessie} veröffentlicht, mit der die Installation ebenso funktionieren
+sollte.\\
+In dieser Anleitung wird davon ausgegangen, dass ein aktuelles Raspbian-Image
+auf die SD-Karte aufgespielt wurde das allererste, automatisch startende
+\Code{raspi-config} bereits abgeschlossen wurde. Ferner ist vom \RPi\ aus eine
+Internetverbindung verfügbar. \textbf{Wenn alle diese Bedingungen erfüllt sind,
+kann ab jetzt auch mit \Code{ssh} gearbeitet werden.}
+
+\begin{itemize}
+\item \textbf{\Code{raspi-config} ausführen}\\
+      \Code{sudo raspi-config}\\
+      Menüpunkt \Code{1 Expand Filesystem} ausführen, um Platz für die Backups während der System-Updates zu schaffen\\
+      Spracheinstellungen im Menüpunkt \Code{4 Internationalisation Options} durchführen
+\item \textbf{Raspbian-Update ohne Kernel und Broadcom-Firmware durchführen}\\
+      \Code{sudo apt-get update}\\
+      \Code{sudo apt-get dist-upgrade}
+\item \textbf{Kernel- und Broadcom-Firmware-Update durchführen}\\
+      \Code{uname -a} \# liefert die aktuelle Kernel-Version, \zB:\\
+      \prompt{Linux raspberrypi 3.18.11+ #781 PREEMPT Tue Apr 21 18:02:18 BST 2015 armv6l GNU/Linux}\\
+      \Code{vcgencmd version} \# liefert die aktuelle Firmware-Version, \zB:\\
+      \prompt{Apr 21 2015 14:42:19\\
+              Copyright (c) 2012 Broadcom\\
+              version 2d5ad04b63af4233440c3f7c8587108223201102 (clean) (release)}\\
+      Update durchführen:\\
+      \Code{sudo apt-get install rpi-update}\\
+      \Code{sudo rpi-update}\\
+      \Code{sudo reboot}\\
+\newpage
+      Update kontrollieren:\\
+      \Code{uname -a}\\
+      \prompt{Linux raspberrypi 4.1.18+ #845 Thu Feb 18 19:37:13 GMT 2016 armv6l GNU/Linux}\\
+      \Code{vcgencmd version}\\
+      \prompt{Feb 25 2016 18:51:26\\
+              Copyright (c) 2012 Broadcom\\
+              version dea971b793dd6cf89133ede5a8362eb77e4f4ade (clean) (release)}
+\end{itemize}
+
+
+\subsection{\filenam{/boot/config.txt} anpassen}
+Bei Verwendung der Hardwarekomponente \textbf{\Ligawo} wird empfohlen, die
+HDMI-Einstellungen in der Datei \filenam{/boot/config.txt} anzupassen.
+
+\begin{itemize}
+\item \textbf{Unterstützte Auflösungen des angeschlossenen Bildschirms ermitteln}\\
+      \Code{tvservice --modes=CEA} \# ermittelt die unterstützen Modi für die HDMI-Gruppe CEA (Consumer Electronics Association)\\
+      \Code{tvservice --modes=DMT} \# ermittelt die unterstützen Modi für die HDMI-Gruppe DMT (Display Monitor Timing)\\
+      \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.9\textwidth]{tvservice.png}
+      \caption{Ausgaben des Kommandos \Code{tvservice}}
+      \label{fig:tvservice}
+      \end{figure}
+      \\Den beiden Ausgaben kann man die optimale Auflösung entnehmen:
+      Im Beispiel aus Abbildung \ref{fig:tvservice} handelt es sich um den Modus 81 aus der HDMI-Gruppe DMT
+\item \textbf{Editieren der Datei \filenam{/boot/config.txt}}\\
+      Eintrag \Code{hdmi\_group=2} \# CEA = Gruppe 1 / DMT = Gruppe 2\\
+      Eintrag \Code{hdmi\_mode=81} \# 1366x768 Pixel\\
+      Eintrag \Code{hdmi\_drive=2} \# Audio-Signal über HDMI erzwingen\\
+      In Abbildung \ref{fig:config_txt} sind die Anpassungen für das verwendete 19-Zoll Siemens Industrial Flat Panel gezeigt.
+      \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.9\textwidth]{config_txt.png}
+      \caption{Änderungen in der Datei \filenam{/boot/config.txt}}
+      \label{fig:config_txt}
+      \end{figure}
+\item \textbf{\Code{raspi-config} ausführen}\\
+      \Code{sudo raspi-config}\\
+      Menüpunkt \Code{8 Advanced Options} ausführen\\
+      Es öffnet sich ein Untermenü:\\
+      Menüpunkt \Code{A9 Audio} öffnen und Option \Code{2 Force HDMI} wählen
+\end{itemize}
+
+
+\subsection{\Bezeichnung\ und alle notwendigen Python-Module installieren}
+\begin{itemize}
+\item \textbf{Package Installer für Python3 installieren}\\
+      \Code{sudo apt-get install python3-pip}\\
+      Es wird das \Code{pip}-Installationsprogramm für Python3-Module installiert.
+\item \textbf{GitHub-Download des Python-Moduls \Code{python-omxplayer-wrapper}}\\
+      \Code{cd /home/pi}\\
+      Die Original-Software wurde für Python2.x erstellt (\url{https://github.com/willprice/python-omxplayer-wrapper}). Um es für Python3 anzupassen habe ich auf GitHub einen sogenannten \textit{Fork} angelegt, eine Projektabspaltung. Download und Entpacken in das Unterverzeichnis \filenam{python-omxplayer-wrapper} mit\\
+      \Code{git clone https://github.com/schlizbaeda/python-omxplayer-wrapper.git}\\
+      \Code{cd python-omxplayer-wrapper}\\
+      Das folgende Kommando für den \textit{Package Installer für Python3} übernimmt die aktuelle Version des Moduls in die Python3-Bibliothek. Dieser Aufruf ist immer notwendig, wenn Änderungen an diesem Modul gemacht wurden!\\
+      \Code{sudo python3 setup.py install}\\
+      \Code{sudo apt-get install python3-dbus} \# notwendig für die DBus-Kommunikation des Wrappers mit \filenam{omxplayer.bin}
+\item \textbf{GitHub-Download des Python-Moduls \Code{pyudev}}\\
+      Dieses Modul wird für die \textit{Plug-and-Play}-Erkennung am USB-Anschluss benötigt. Verwendung von Version 0.19 oder höher:\\
+      \Code{cd /home/pi}\\
+      \Code{git clone https://github.com/pyudev/pyudev.git}\\
+      \Code{cd pyudev}\\
+      \Code{sudo python3 setup.py install}
+\item \textbf{GitHub-Download von \Code{\Bezeichnung}}\\
+      \textit{\textbf{\Bezeichnung} ist derzeit auf GitHub noch unter dem Projektnamen (Repository) \Code{bauwong} abgelegt!}\\
+      \Code{cd /home/pi}\\
+      \Code{git clone https://github.com/schlizbaeda/bauwong.git}\\
+      \Code{cd bauwong}\\
+      \Code{chmod a+x bauwong.py} \# Die Python-Programmdatei ausführbar machen
+\end{itemize}
+%%%%%%%%%%  Alte Version %%%%%%%%%%
+%\subsection{\Bezeichnung\ und alle notwendigen Python-Module installieren}
+%\begin{itemize}
+%\item \textbf{Package Installer für Python3 installieren}\\
+%      \Code{sudo apt-get install python3-pip}\\
+%      Es wird das \Code{pip}-Installationsprogramm für Python3-Module installiert
+%\item \textbf{Verzeichnis \filenam{/home/pi/bauwong} anlegen}\\
+%      \Code{mkdir /home/pi/bauwong}
+%\item \textbf{\Code{python-omxplayer-wrapper-develop} installieren}\\
+%      \Code{cd /home/pi/bauwong}\\
+%      \Code{sudo git clone https://github.com/willprice/python-omxplayer-wrapper.git} \# Download und Entpacken im aktuellen Verzeichnis\\
+%      \Code{cd python-omxplayer-wrapper}\\
+%      Es sind Anpassungen für Python3 in den beiden Dateien \filenam{build/lib/omxplayer/bus\_finder.py} und \filenam{build/lib/omxplayer/player.py} notwendig!\\
+%      \Code{sudo python3 setup.py install} \# Dieses Kommando des \textit{Package Installers für Python3} übernimmt die aktuelle Version des Moduls von \filenam{/home/pi/bauwong} in die Python3-Bibliothek. Dieser Aufruf ist immer notwendig, wenn Änderungen an diesem Modul übernommen werden sollen!\\
+%      \Code{sudo apt-get install python3-dbus} \# notwendig für die D-Bus-Kommunikation des Wrappers mit \filenam{omxplayer.bin}.
+%\item \textbf{\Code{pyudev} installieren}\\
+%      \Code{cd /home/pi/bauwong}\\
+%      \Code{sudo git clone https://github.com/lunaryorn/pyudev.git} \# Download und Entpacken im aktuellen Verzeichnis\\
+%      \Code{cd pyudev}\\
+%      Es sind Anpassungen für Python3 in der Dateien \filenam{src/pyudev/glib.py} notwendig!\\
+%      \Code{sudo python3 setup.py install} \# Dieses Kommando des \textit{Package Installers für Python3} übernimmt die aktuelle Version des Moduls von \filenam{/home/pi/bauwong} in die Python3-Bibliothek. Dieser Aufruf ist immer notwendig, wenn Änderungen an diesem Modul übernommen werden sollen!\\
+%      Modul \Code{six} installieren:\\
+%      * Download der Datei \filenam{six-1.10.0.tar.gz} von \url{https://pypi.python.org/pypi/six}\\
+%      * \Code{cd /home/pi/bauwong}\\
+%      * \Code{tar xvf six-1.10.0.tar.gz}\\
+%      * \Code{cd six-1.10.0}\\
+%      * \Code{sudo python3 setup.py install}
+%\end{itemize}
+
+\begin{bclogo}[logo = \bclampe, noborder = true]{Es ist so weit!}
+Jetzt ist der Zeitpunkt gekommen, die neu installierte Software
+\textbf{\Bezeichnung} auszuprobieren \smiley{smile}. Geben Sie im
+Terminalfenster bitte folgendes Kommando ein:\\
+\Code{./bauwong.py}\\
+Es sollte die grafische Oberfläche von \Bezeichnung\ aus Abbildung
+\ref{fig:yamuplay_menu} gestartet werden. Nun muss nur noch ein USB-Memorystick
+mit Musikdateien angesteckt werden und es kann losgehen!
+\end{bclogo}
+
+
+\subsection{Desktop des \RPi\ einrichten}
+Nachdem die Software nun läuft, kann der Desktop des \RPi\ etwas
+benutzerfreundlicher eingerichtet werden \smiley{smile}. Im GitHub-Repository
+befinden sich im Unterverzeichnis \filenam{desktop} dafür vorbereitete Dateien.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.67\textwidth]{startmenu.png}
+\caption{Neuer Eintrag im Startmenü des \RPi}
+\label{fig:startmenu}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.67\textwidth]{desktop.png}
+\caption{Neues Icon auf dem Desktop des \RPi}
+\label{fig:desktop}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{\Bezeichnung\ ins Startmenü aufnehmen}\\
+      \Code{sudo cp bauwong.desktop /usr/share/raspi-ui-overrides/applications}\\
+      Wenn die Datei \filenam{bauwong.desktop} nicht verändert wird, erscheint im Startmenü unter \textit{Zubehör} der Eintrag \textit{Bauwong n.e.V.}, siehe Abbildung \ref{fig:startmenu}.
+\item \textbf{Auf dem Desktop ein Icon für \Bezeichnung\ anlegen}\\
+      Durch Erstellung eines symbolischen Links auf die Datei \filenam[bauwong.desktop} wird ein Desktop-Icon angelegt. Dieses Icon wird sofort sichtbar, siehe Abbildung \ref{fig:desktop}.\\
+      \Code{cd /home/pi/Desktop}\\
+      \Code{ln -s /usr/share/raspi-ui-overrides/applications/bauwong.desktop}
+\item \textbf{Autostart von \Bezeichnung\ einrichten}\\
+      \Code{cd /home/pi/.config}\\
+      \Code{mkdir autostart} \# falls dieses Verzeichnis noch nicht existiert\\
+      \Code{cd autostart}\\
+      \Code{ln -s /usr/share/raspi-ui-overrides/applications/bauwong.desktop}
+\item \textbf{Bildschirmschoner des \RPi\ ausschalten}\\
+      In der Datei \filenam{/etc/lightdm/lightdm.conf} muss folgende Änderung vorgenommen werden:
+      \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.6\textwidth]{screensaver.png}
+      \caption{Bildschirmschoner in Datei \filenam{/etc/lightdm/lightdm.conf} deaktivieren}
+      \label{fig:screensaver}
+      \end{figure}
+\end{itemize}
+
+
+\subsection{touchpanel-Tastatur \textit{\matchboxKeyboard} installieren}
+In diesem Abschnitt wird die Installation der virtuellen Touchpanel-Tastatur\\
+\textit{\matchboxKeyboard} beschrieben. Das Vorgehen wurde weitestgehend von\\
+\url{http://ozzmaker.com/virtual-keyboard-for-the-raspberry-pi} übernommen.
+
+\begin{itemize}
+\item \textbf{Compilierung von \textit{\matchboxKeyboard} vorbereiten}\\
+      Softwarepakete für die Compilierung installieren:\\
+      \Code{sudo apt-get install libfakekey-dev libpng-dev libxft-dev autoconf libtool -y}
+\item \textbf{\textit{\matchboxKeyboard} compilieren}\\
+      \Code{git clone https://github.com/mwilliams03/matchbox-keyboard.git}\\
+      \Code{cd matchbox-keyboard}\\
+      \Code{./autogen.sh}\\
+      \Code{make}\\
+      \Code{sudo make install}
+\item \textbf{shared libraries \textit{erst nach} der Compilierung installieren!}\\
+      \Code{sudo apt-get install libmatchbox1 -y}
+\item \textbf{Icon \texit{Toggle Matchbox Keyboard} in der Schnellstartleiste erstellen}\\
+      \Code{cd /home/pi/bauwong/keyboard}\\
+      Eintrag im Startmenü unter \textit{Zubehör}:\\
+      \Code{sudo cp matchbox-keyboard.sh /usr/local/bin}\\
+      \Code{sudo chmod a+x /usr/local/bin/matchbox-keyboard.sh}\\
+      \Code{sudo cp matchbox-keyboard.desktop /usr/local/share/applications/inputmethods}\\
+      Shellscript \filenam{toggle-matchbox-keyboard.sh} hinzufügen:\\
+      \Code{sudo cp toggle-matchbox-keyboard.sh /usr/bin}\\
+      \Code{sudo chmod a+x /usr/bin/toggle-matchbox-keyboard.sh}\\
+      \Code{sudo cp toggle-matchbox-keyboard.desktop /usr/share/applications}\\
+      Eintrag des Shellscripts \filenam{toggle-matchbox-keyboard.sh} in der Schnellstartleiste:\\
+      \Code{cp panel /home/pi/.config/lxpanel/LXDE-pi/panels}\\
+      Die kopierte Datei \filenam{panel} entspricht dem Original mit folgender Ergänzung:
+      \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.8\textwidth]{launchbar.png}
+      \caption{Änderungen in der Datei \filenam{/home/pi/.config/lxpanel/LXDE-pi/panels/panel}}
+      \label{fig:launchbar}
+      \end{figure}
+      Im Abschnitt \textit{Plugin\arrowright type=launchbar} müssen die markierten Zeilen aus Abbildung \ref{fig:launchbar} ergänzt werden.
+\item \textbf{Tastaturlayout}\\
+      Ein passendes Tastaturlayout befindet sich in der Datei \filenam{/home/pi/bauwong/keyboard/keyboard-bauwong.xml}. Dieses Layout kann natürlich noch angepasst werden. Nach der Änderung muss es nach \filenam{/usr/local/share/matchbox-keyboard} kopiert werden:\\
+      \Code{sudo cp keyboard-bauwong.xml /usr/local/share/matchbox-keyboard}
+\end{itemize}
+
+
+\section{Erweiterungen und Verbesserungen der Software}
+\label{sect:Erweiterungen}
+Zuletzt noch eine Liste von Punkten, um die die Software \Bezeichnung\ ergänzt
+werden könnte. Hier handelt es sich um ein \textit{Brainstorming}. Die
+Reihenfolge soll keine Gewichtung darstellen!
+
+\subsection{Bedienung und grafische Oberfläche}
+\begin{itemize}
+\item \textbf{Scrolling durch Wischgesten wie an einem Smartphone}\\
+      horizontal und vertikal: \Code{Treeview.xview} bzw. \Code{Treeview.yview}
+\item \textbf{Anzeige von Titlenummer und aktueller Laufzeit}\\
+      wie bei den meisten klassischen CD-Spielern
+\item \textbf{Auf die Gesamtdauer eines Stückes skalierter "`Fortschrittsbalken"'}\\
+      einfache Verschiebemöglichkeit mit Zeitanzeige wie bei den meisten Mediaplayern
+\item \textbf{\textit{Drag + Drop} von Mediendateien aus der Baumstruktur in die Playlist}\\
+      Damit hätte man die Möglichkeit, neue Titel irgendwo in der Mitte der
+      bestehenden Playlist einzufügen. Momentan werden alle neuen Titel hinten
+      angehängt.
+\item \textbf{evtl "`Cursortasten"' für die Baumansicht und <ENTER> zum Aktivieren}\\
+      Ist dieses Thema mit der virtuellen Tastatur erschlagen?
+\end{itemize}
+
+\subsection{Funktionalität von \Bezeichnung}
+\begin{itemize}
+\item \textbf{Anpassen auf unterschiedliche Displaygrößen}\\
+      Derzeit ist eine Displaygröße von mindestens 1366x768 Pixeln notwendig,
+      da die Fenster\textbf{höhe} im Code derzeit fest eingestellt ist. Die
+      Fensterbreite ist unkritischer.\\
+      * Fenstergröße flexibler programmieren!\\
+      * Schriftgröße vor allem fürs Treeview-Steuerelement parametrierbar machen\\
+      * Alles in einer config-Datei ablegen
+\item \textbf{Erkennung anderer USB-Gerätetypen (Smartphones)}\\
+      Derzeit wird nur der USB-Gerätetyp "`Mass Storage Device"' unterstützt.
+      Viele neuere Smartphones stellen ihre Daten mitunter nur noch über MTP
+      (Media Transfer Protocol), eine Weiterentwicklung von PTP (Picture
+      Transfer Protocol) zur Verfügung.
+\item \textbf{Einbinden der vorhandenen Dateien in die Baumansicht}\\
+      Derzeit wird ein USB-Laufwerk, nachdem es erkannt wurde, immer
+      \textbf{komplett} (rekursiv) eingelesen! Dies kann bei großen Laufwerken
+      mit vielen Einzeldateien mitunter recht lange dauern! Besser wäre es, nur
+      das gerade geöffnete Verzeichnis \textbf{flach} und nicht rekursiv
+      einzulesen. Über dieses Vorgehen werden die Dateien stückweise registriert
+      und der Vorgang dauert nie arg lange.\\
+      Zu berücksichtigen ist das aber bei der Dateisuche, da zum Suchzeitpunkt
+      nicht zwingend schon alle Unterverzeichnisse komplett eingelesen wurden!
+\item \textbf{Dateitypen berücksichtigen}\\
+      Derzeit werden alle vorhandenen Dateien angezeigt. Über die Dateiendung oder
+      eine "`magische Dateinummer"' am Dateianfang nur die Mediendateien auflisten.\\
+      * Klären, welche Dateitypen von \filenam{omxplayer.bin} überhaupt unterstützt werden.\\
+      * Playlists (\filenam{*.mpu}), Bilddateien, Textdateien, und pdf berücksichtigen?
+\item \textbf{\filenam{omxplayer.bin}}\\
+      Der omxplayer macht ein kurzes Fading (< 1 Sekunde) beim Start einer neuen
+      Musikdatei. Dies ist manchmal wirklich störend!
+\end{itemize}
+
+Hierbei handelt es sich um die noch nicht abgearbeiteten Punkte aus meiner
+Schmierzettelsammlung. Diese Liste erhebt aber keinen Anspruch auf
+Vollständigkeit. \smiley{smile}\\
+
+\texttt{schlizbaeda}
+
