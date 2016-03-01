@@ -1,5 +1,5 @@
 # bauwong
-YAMuPlay - Yet Another MUsic PLAYer - Version 0.1 in der Konfiguration für den Faschingswagen 2016 (Thema "500 Jahre Reinheitsgebot")
+YAMuPlay - Yet Another MUsic PLAYer - Version 0.1 in der Konfiguration für den Faschingswagen 2016 von bauwong n.e.V. (Thema "500 Jahre Reinheitsgebot")
 
 ## Download inklusive aller Module und Bibliotheken
 ```shell
