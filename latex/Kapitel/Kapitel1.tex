@@ -13,22 +13,22 @@ Die ursprüngliche Absicht war, eine Software zu erstellen, mit der eine einfache
 und intuitive Handhabung einer Musiksammlung möglich ist. Dabei sollte sich die
 Bedienung an einem klassischen CD-Spieler orientieren. Unter Linux und somit
 auch auf dem \RPi\ gibt es das hervorragende Softwarepaket \textbf{MPD} ("`Music
-Player Daemon"'), das \ua über ALSA alle installierten Soundkarten unterstützt
-und zahlreiche Client-Anwendungen (MPC) zur Verfügung stellt. Sein einziger
-Nachteil liegt in der Verwaltung der Musikdateien über eine Datenbank und den
-damit verbundenen umständlichen und aufwändigen Aktualisierungsarbeiten bei
-neuen Musikdateien, die dem einfachen CD-Spieler-Prinzip entgegenstehen.
-\textit{Gerne lasse ich mich hier vom Gegenteil überzeugen, falls es für den
-\RPi\ taugliche MPCs geben sollte \smiley{wink}}
-(\url{mailto:schlizbaeda@gmx.de}).\\
+Player Daemon"'), das \ua über ALSA alle auf dem Computer installierten
+Soundkarten unterstützt und zahlreiche Client-Anwendungen (MPC) zur Verfügung
+stellt. Sein einziger Nachteil liegt in der Verwaltung der Musikdateien über
+eine Datenbank und den damit verbundenen umständlichen und aufwändigen
+Aktualisierungsarbeiten bei neuen Musikdateien, die dem einfachen
+CD-Spieler-Prinzip entgegenstehen. \textit{Gerne lasse ich mich hier vom
+Gegenteil überzeugen, falls es für den \RPi\ taugliche MPCs geben sollte
+\smiley{wink}} (\url{mailto:schlizbaeda@gmx.de}).\\
 Die Software \textbf{\Bezeichnung} in Version \Version\ besteht aus einer
 grafisch einfach gehaltenen, mit dem Python-Modul \textbf{tkinter} erstellten
 Benutzeroberfläche (GUI) ähnlich einem Dateimanager: Im linken Teil befindet
 sich ein sogenanntes Treeview-Steuerelement, in dem die hierarchische
 Ordnerstruktur von Laufwerken angezeigt wird, die unter \filenam{/media}
 gemountet sind. Am \RPi\ neu angeschlossene USB-Laufwerke werden automatisch
-erkannt und die Ordnerstruktur wird entsprechend aktualisiert. Musikdateien
-können durch eine Doppelklick in die Playlist eingetragen werden.\\
+erkannt und entsprechend in die Ordnerstruktur eingebunden. Musikdateien können
+durch eine Doppelklick in die Playlist eingetragen werden.\\
 Der rechte Teil besteht aus der Playlist und Steuerelementen zum Entfernen und
 Verschieben der Musiktitel innerhalb der Playlist. Im unteren Teil befinden sich
 die Steuerelemente zum Abspielen der Musiktitel, wie man sie vom CD-Spieler
@@ -39,16 +39,17 @@ kennt, außerdem ist noch ein Eingabefeld für die Titelsuche enthalten.
 Grundsätzlich ist für den Betrieb von \textbf{\Bezeichnung} nur ein \RPi\
 erforderlich, an den ein HDMI-Bildschirm mit Lautsprechern angeschlossen wird.
 Für die Bedienung benötigt man ferner Tastatur und Maus.\\
-Der erste konkrete Anwendungsfall für \textbf{\Bezeichnung} war jedoch auf
-dem Faschingswagen 2016 mit dem Thema "`500 Jahre Reinheitsgebot"' von
-\Verein{\bauwong}, einer losen Gruppe von Freunden in Großkarolinenfeld. In der
- weisen Voraussicht, dass es auf dem Wagen während der Teilnahme an den
-Faschingsumzügen mitunter auch etwas grob zugehen könnte, beschloss ich, anstatt
-meines Laptops einen Aufbau mit robusteren und gleichzeitig kostengünstigeren
-Komponenten umzusetzen, der den mechanischen Anforderungen standhalten sollte:\\
+Der erste konkrete Anwendungsfall für \textbf{\Bezeichnung} war jedoch ein
+Musikspieler auf dem Faschingswagen 2016 mit dem Thema "`500 Jahre
+Reinheitsgebot"' von \Verein{\bauwong}, einer losen Gruppe von Freunden in
+Großkarolinenfeld. In der weisen Voraussicht, dass es auf dem Wagen während der
+Teilnahme an den Faschingsumzügen mitunter auch etwas grob zugehen könnte,
+beschloss ich, anstatt meines Laptops einen Aufbau mit robusteren und
+gleichzeitig kostengünstigeren Komponenten umzusetzen, die den mechanischen
+Anforderungen standhalten sollten:\\
 Ein \textbf{SIMATIC Industrial Flat Panel} (19 Zoll) aus dem Hause Siemens --
-nicht wirklich billig, aber dank Vitamin B kostenlos herangekommen
-\smiley{smile.png} -- widerstandsfähig genug, um den Anforderungen im rauhen
+nicht wirklich billig, aber dank Vitamin B bin ich daran kostenlos herangekommen
+\smiley{smile.png}: Widerstandsfähig genug, um den Anforderungen im rauhen
 Industrieeinsatz zu genügen, sollte es auch den Einsatz auf dem Faschingswagen
 aushalten.\\
 Auf dem rückseitigen Deckel des Panels wurden ein \textbf{\RPi\ Modell B+} und
@@ -57,8 +58,8 @@ ein analoges Audiosignal abzugreifen. Der analoge Audioausgang des \RPi\ ist
 nämlich echt besch...eiden \smiley{nosmile}. Das Ligawoteil ist mal Chinaware,
 die wirklich zu gebrauchen ist: Das erzeugte Audiosignal zeigt keinerlei
 Qualitätseinbußen. Selbst bei größerer Lautstärke an relativ guten Verstärkern
-und Lautsprechern, wo schlechte Soundqualität schnell auffällt, konnte ich als
-anspruchsvoller HiFi-Fan keine Abstriche erkennen. \smiley{smile}\\
+und Lautsprechern, wo schlechte Tonqualität schnell auffällt, konnte ich als
+relativ anspruchsvoller HiFi-Fan keine Abstriche erkennen. \smiley{smile}\\
 Das Ganze wurde in ein zugegebenermaßen rustikales Holzgehäuse eingebaut (siehe
 Bilder), Netzteile (24V und 5V) rein, 230V-, USB- und Ethernet-Buchsen sowie
 drei Schalter ins Holzgehäuse gebaut, das Zeug noch intern verkabelt und fertig.
@@ -68,9 +69,10 @@ drei Schalter ins Holzgehäuse gebaut, das Zeug noch intern verkabelt und fertig.
 \subsection{Software unter GPL v3 }
 Die Software \textbf{\Bezeichnung} wird unter der Lizenz GPL v3 der \Verein{Free
 Software Foundation} veröffentlicht. Die Software darf frei kopiert und ohne
-Entgelt, privat oder kommerziell verwendet werden. Bitte lesen Sie die GPL v3,
-die sich im Programmpaket in der Datei \filenam{GPLv3.txt} befindet oder im
-Internet unter \url{https://www.gnu.org/licenses/gpl-3.0} abgerufen werden kann.
+Leistung eines Entgelts privat oder kommerziell verwendet werden. Bitte lesen
+Sie die GPL v3, die sich im Programmpaket in der Datei \filenam{bauwong.lic}
+befindet oder im Internet unter \url{https://www.gnu.org/licenses/gpl-3.0}
+abgerufen werden kann.
 
 \autor\ als Urheber und Copyrightinhaber stellt die Software "`so wie sie ist"'
 ohne Garantie und ohne Zusicherung einer bestimmten Funktionalität zum Download
@@ -78,19 +80,20 @@ bereit. Es steht Ihnen als Anwender frei, die Software zu benutzen oder es eben
 nicht zu tun. Entscheiden Sie sich für die Benutzung, so tun Sie dies auf
 eigenes Risiko und auf eigene Verantwortung. Der Autor übernimmt keine Garantie
 für die Software und deren Funktion und haftet auch nicht für Schäden, die aus
-der Installation und Benutzung der Software entstehen.
+der Installation und Verwendung der Software entstehen.
 
 \subsection{Dokumentation unter FDL v1.3}
-Diese Dokumentation darf gemäß der Bestimmungen aus der Lizenz FDL v1.3 (oder
-nachfolgend) kopiert, verteilt und/oder geändert werden. Details siehe 
+Diese Dokumentation wurde mit dem Textsatzsystem \LaTeX\ erstellt.\\
+Sie darf gemäß der Bestimmungen aus der Lizenz FDL v1.3 (oder nachfolgend)
+kopiert, verteilt und/oder geändert werden. Details siehe 
 \url{http://www.gnu.org/licenses/fdl.html}
 
 \subsection{Externe Internet-Links}
 \textbf{Einfach weil's sein muss:}\\
 In diesem Dokument befinden sich Links zu verschiedenen externen Seiten im
 Internet. Den Inhalt mache ich mir nicht zu eigen, da ich auf die Gestaltung
-dieser Seiten keinen Einfluss habe. Zum Zeitpunkt der Verlinkung enthielt keine
-Seite illegale Inhalte. Dies kann ich aber nur in größeren Abständen
+dieser Seiten keinerlei Einfluss habe. Zum Zeitpunkt der Verlinkung enthielt
+keine Seite illegale Inhalte. Dies kann ich aber nur in größeren Abständen
 kontrollieren. Sollten Sie an einem Link etwas auszusetzen haben, so senden Sie
 bitte eine e-mail an \url{mailto:schlizbaeda@gmx.de}. 
 
@@ -146,6 +149,4 @@ Folgende Abkürzungen werden in dieser Dokumentation verwendet:
 	\acro{MPD}{\textbf{M}usic \textbf{P}layer \textbf{D}aemon}
 	\acro{USV}{\textbf{U}nterbrechnungsfreie \textbf{S}trom\textbf{v}ersorgung}
 \end{acronym}
-
-
 

@@ -22,7 +22,7 @@ bleiben genügend CPU-Ressourcen frei.\\
 Nachteilig ist jedoch, dass ALSA aufgrund der großen Hardwarenähe von
 \filenam{omxplayer.bin} nicht eingebunden ist und somit wirkungslos bleibt.
 Daher funktioniert weder der ALSA-Mixer von Raspbian, noch kann eine Soundkarte
-wie Hifiberry DAC+ eingesetzt werden. Die Audioausgabe kann daher nur über HDMI
+wie Hifiberry DAC+ eingesetzt werden. Die Audioausgabe kann nur über HDMI
 oder den Analoganschluss des \RPi\ erfolgen, eine Laustärkeregelung muss am
 Audioverstärker vorgenommen werden!
 
@@ -31,10 +31,10 @@ hinsichtlich der Erstellung, Änderung und Verwaltung von Playlists. Bereits
 in Kapitel \ref{sec:Einfuehrung_Software} in der Einführung habe ich die
 Problematik des Music Player Daemons angedeutet. So etwas ist nicht zu
 gebrauchen, wenn Änderungen \textit{schnell} vorgenommen werden sollen/müssen.
-Vielmehr ist eine intuitive Bedieneroberfläche erforderlich. Auch in
-\Bezeichnung\ kann diesbezüglich noch viel getan werden, das will ich gar nicht
-abstreiten. Mehrere Punkte dazu sind in Kapitel \ref{sect:Erweiterungen}
-aufgeführt.
+Vielmehr ist eine intuitive Bedieneroberfläche erforderlich. \Bezeichnung\ ist
+ein Versuch in diese Richtung, aber auch hier kann diesbezüglich noch viel
+getan werden, das will ich gar nicht abstreiten. Mehrere Punkte dazu sind in
+Kapitel \ref{sect:Erweiterungen} aufgeführt.
 
 \begin{figure}[h]
 \centering
@@ -50,8 +50,9 @@ hierarchischen Baumstruktur angezeigt, gewöhnliche Dateien in Normalschrift und
 Verzeichnisse in fetter Schrift. Ein Doppelklick auf ein Verzeichnis öffnet oder
 schließt es, eine gewöhnliche Datei wird der Playlist hinzugefügt. Mehrmaliges
 Hinzufügen der gleichen Datei zur Playlist ist natürlich möglich. \Bezeichnung\
-kann derzeit noch nicht unterscheiden, ob es sich dabei um eine abspielbare
-Mediendatei oder um einen anderen Dateityp (\zB eine Textdatei) handelt.\\
+kann derzeit jedoch noch nicht unterscheiden, ob es sich bei der gewählten Datei
+um eine abspielbare Mediendatei oder um einen anderen Dateityp (\zB eine
+Textdatei) handelt.\\ 
 Im unteren Bereich befinden sich Steuerelemente zur Dateisuche. Die Suche
 berücksichtigt derzeit nur die \textbf{Dateinamen}, nicht die Metadaten
 (\zB ID3-Tags) der Mediendateien. Dies würde ja eine Datenbank erfordern, auf
@@ -66,14 +67,14 @@ verschieben oder wieder ganz aus der Liste zu entfernen. Unterhalb der Playlist
 sind die Schaltflächen \textit{Play/Pause}, \textit{seek}, \textit{prev},
 \textit{next} und \textit{Stop}, die den Tasten eines CD-Spielers nachempfunden
 sind. Ein Doppelklick auf einen Titel in der Playlist springt sofort dorthin und
-spielt diesen Titel sofort ab.\\
+spielt diesen Titel ab.\\
 Zusätzlich ist unten ein Eingabefeld für die Transparenz (den sogenannten
 alpha-Wert) von Videos, die zwischen 0 (vollständig transparent, d.h.
-unsichtbar) und 255 (vollständig undurchsichtig) liegen kann. Grundsätzlich
-reagiert der Desktop auch bei deckender Anzeige von Videos auf Maus- \bzw 
-Touchereignisse ganz normal, die Eingabe muss allerdings "`blind"' erfolgen.
-Der Standardwert von 210 für die Transparenz lässt den Desktop und \Bezeichnung\
-jedoch leicht durchscheinen, so dass eine Bedienung noch möglich ist.
+unsichtbar) und 255 (vollständig deckend) liegen kann. Grundsätzlich reagiert
+der Desktop auch bei deckender Anzeige von Videos auf Maus- \bzw Touchereignisse
+ganz normal, die Eingabe muss allerdings "`blind"' erfolgen. Der Standardwert
+von 210 für die Transparenz lässt den Desktop des \RPi\ und \Bezeichnung\ noch
+leicht durchscheinen, so dass eine Bedienung möglich ist.
 
 Über das Menü von \Bezeichnung\ können in der Leiste \menuitem{Datei} Playlists
 geladen und gespeichert werden. Es wird der Standarddialog des Betriebssystems
@@ -130,7 +131,7 @@ Zur Installation von \Bezeichnung\ benötigt man folgende Bibliotheken und Module
 \hline
 \Code{six} & 1.10.0 & MIT-Lizenz & \url{https://pypi.python.org/pypi/six}\\
 \midrule[2pt]
-\Code{matchbox virtual keyboard} & aktuell(?) & LGPL v... & \url{https://github.com/mwilliams03/matchbox-keyboard.git}\\
+\Code{\matchboxKeyboard} & aktuell(?) & LGPL v... & \url{https://github.com/mwilliams03/matchbox-keyboard.git}\\
 %\hline
 \bottomrule[2pt]
 \end{tabular}
@@ -144,18 +145,19 @@ Zur Installation von \Bezeichnung\ benötigt man folgende Bibliotheken und Module
 \Code{six}. Das Modul \Code{python\textbf{3}-pip} muss auf dem \RPi\ installiert
 werden, damit die vier genannten Python-Module wiederum richtig installiert
 werden können.\\
-Die Software \Code{matchbox virtual keyboard} ist nur dann notwendig, wenn keine
+Die Software \Code{\matchboxKeyboard} ist nur dann notwendig, wenn keine
 reale Tastatur verwendet werden soll, so wie auf dem Faschingswagen.
  
 
 \section{Installation von \Bezeichnung\ auf dem \RPi}
 Dieser Abschnitt beschreibt die \textbf{vollständige} Installation von
 \Bezeichnung\ auf einem jungfräulichen Raspbian-System mit dem Ausgabestand
-\textit{wheezy} vom 05.05.2015, Imagedatei \filenam{2015-05-05-raspbian-wheezy.img}.
+\textit{wheezy} vom 05.05.2015, Imagedatei\\
+\filenam{2015-05-05-raspbian-wheezy.img}.\\
 Ich habe die Beschreibung möglichst detailliert gehalten, damit alle Leser die
 Sache durch- und nachvollziehen können, egal auf welchem Erfahrungsstand sie
-sich befinden. An den beschrieben Punkten hatte ich als grimmiger Python-Noob
-selbst meine Probleme!\\
+sich befinden. An den beschrieben Punkten hatte ich anfangs als grimmiger Linux-
+und Python-Noob selbst meine Probleme!\\
 Grundsätzlich kann diese Installationsanleitung in fünf Bereiche aufgegliedert
 werden:
 \begin{itemize}
@@ -163,14 +165,14 @@ werden:
 \item \filenam{/boot/config.txt} anpassen
 \item \Bezeichnung\ und alle notwendigen Python-Module installieren
 \item Desktop des \RPi\ einrichten
-\item \filenam{matchbox virtual keyboard} installieren
+\item Touchpanel-Tastatur \textit{\matchboxKeyboard} installieren
 \end{itemize}
 
 \begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
 Für die Installation muss der \RPi\ zwingend einen Internetzugang erhalten.\\
 Zudem sollten zumindest am Anfang Tastatur und Maus angeschlossen sein. Die
-Interaktion mit dem \RPi\ kann im späteren Verlauf der Inbetriebnahme auch über
-\Code{ssh} erfolgen.
+Interaktion mit dem \RPi\ kann im späteren Verlauf der Inbetriebnahme wahlweise
+auch über \Code{ssh} erfolgen.
 \end{bclogo}
 
 
@@ -180,7 +182,7 @@ Die gesamte Installation wurde auf \textit{raspbian wheezy}, Ausgabestand
 \textit{jessie} veröffentlicht, mit der die Installation ebenso funktionieren
 sollte.\\
 In dieser Anleitung wird davon ausgegangen, dass ein aktuelles Raspbian-Image
-auf die SD-Karte aufgespielt wurde das allererste, automatisch startende
+auf die SD-Karte aufgespielt wurde und das allererste, automatisch startende
 \Code{raspi-config} bereits abgeschlossen wurde. Ferner ist vom \RPi\ aus eine
 Internetverbindung verfügbar. \textbf{Wenn alle diese Bedingungen erfüllt sind,
 kann ab jetzt auch mit \Code{ssh} gearbeitet werden.}
@@ -200,11 +202,11 @@ kann ab jetzt auch mit \Code{ssh} gearbeitet werden.}
       \prompt{Apr 21 2015 14:42:19\\
               Copyright (c) 2012 Broadcom\\
               version 2d5ad04b63af4233440c3f7c8587108223201102 (clean) (release)}\\
+\newpage
       Update durchführen:\\
       \Code{sudo apt-get install rpi-update}\\
       \Code{sudo rpi-update}\\
       \Code{sudo reboot}\\
-\newpage
       Update kontrollieren:\\
       \Code{uname -a}\\
       \prompt{Linux raspberrypi 4.1.18+ #845 Thu Feb 18 19:37:13 GMT 2016 armv6l GNU/Linux}\\
@@ -308,7 +310,8 @@ HDMI-Einstellungen in der Datei \filenam{/boot/config.txt} anzupassen.
 \begin{bclogo}[logo = \bclampe, noborder = true]{Es ist so weit!}
 Jetzt ist der Zeitpunkt gekommen, die neu installierte Software
 \textbf{\Bezeichnung} auszuprobieren \smiley{smile}. Geben Sie im
-Terminalfenster bitte folgendes Kommando ein:\\
+Terminalfenster bitte folgende Kommandos ein:\\
+\Code{cd /home/pi/bauwong} \textit{\# Da sollten Sie sich bereits befinden!}\\
 \Code{./bauwong.py}\\
 Es sollte die grafische Oberfläche von \Bezeichnung\ aus Abbildung
 \ref{fig:yamuplay_menu} gestartet werden. Nun muss nur noch ein USB-Memorystick
@@ -323,14 +326,14 @@ befinden sich im Unterverzeichnis \filenam{desktop} dafür vorbereitete Dateien.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.67\textwidth]{startmenu.png}
+\includegraphics[width=0.8\textwidth]{startmenu.png}
 \caption{Neuer Eintrag im Startmenü des \RPi}
 \label{fig:startmenu}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.67\textwidth]{desktop.png}
+\includegraphics[width=0.8\textwidth]{desktop.png}
 \caption{Neues Icon auf dem Desktop des \RPi}
 \label{fig:desktop}
 \end{figure}
@@ -349,7 +352,8 @@ befinden sich im Unterverzeichnis \filenam{desktop} dafür vorbereitete Dateien.
       \Code{cd autostart}\\
       \Code{ln -s /usr/share/raspi-ui-overrides/applications/bauwong.desktop}
 \item \textbf{Bildschirmschoner des \RPi\ ausschalten}\\
-      In der Datei \filenam{/etc/lightdm/lightdm.conf} muss folgende Änderung vorgenommen werden:
+      In der Datei \filenam{/etc/lightdm/lightdm.conf} muss folgende Änderung vorgenommen werden:\\
+      \Code{sudo nano /etc/lightdm/lightdm.conf}
       \begin{figure}[h]
       \centering
       \includegraphics[width=0.6\textwidth]{screensaver.png}
@@ -359,7 +363,7 @@ befinden sich im Unterverzeichnis \filenam{desktop} dafür vorbereitete Dateien.
 \end{itemize}
 
 
-\subsection{touchpanel-Tastatur \textit{\matchboxKeyboard} installieren}
+\subsection{Touchpanel-Tastatur \textit{\matchboxKeyboard} installieren}
 In diesem Abschnitt wird die Installation der virtuellen Touchpanel-Tastatur\\
 \textit{\matchboxKeyboard} beschrieben. Das Vorgehen wurde weitestgehend von\\
 \url{http://ozzmaker.com/virtual-keyboard-for-the-raspberry-pi} übernommen.
@@ -391,13 +395,13 @@ In diesem Abschnitt wird die Installation der virtuellen Touchpanel-Tastatur\\
       Die kopierte Datei \filenam{panel} entspricht dem Original mit folgender Ergänzung:
       \begin{figure}[h]
       \centering
-      \includegraphics[width=0.8\textwidth]{launchbar.png}
+      \includegraphics[width=0.7\textwidth]{launchbar.png}
       \caption{Änderungen in der Datei \filenam{/home/pi/.config/lxpanel/LXDE-pi/panels/panel}}
       \label{fig:launchbar}
       \end{figure}
-      Im Abschnitt \textit{Plugin\arrowright type=launchbar} müssen die markierten Zeilen aus Abbildung \ref{fig:launchbar} ergänzt werden.
+      Im Abschnitt \textit{Plugin\{ Config\{ type=launchbar \} \}} müssen die markierten Zeilen aus Abbildung \ref{fig:launchbar} ergänzt werden.
 \item \textbf{Tastaturlayout}\\
-      Ein passendes Tastaturlayout befindet sich in der Datei \filenam{/home/pi/bauwong/keyboard/keyboard-bauwong.xml}. Dieses Layout kann natürlich noch angepasst werden. Nach der Änderung muss es nach \filenam{/usr/local/share/matchbox-keyboard} kopiert werden:\\
+      Ein passendes Tastaturlayout befindet sich in der Datei\\ \filenam{/home/pi/bauwong/keyboard/keyboard-bauwong.xml}. Dieses Layout kann natürlich noch angepasst werden. Nach der Änderung muss es nach \filenam{/usr/local/share/matchbox-keyboard} kopiert werden:\\
       \Code{sudo cp keyboard-bauwong.xml /usr/local/share/matchbox-keyboard}
 \end{itemize}
 
