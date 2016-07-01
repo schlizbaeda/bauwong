@@ -140,6 +140,14 @@ Zur Installation von \Bezeichnung\ benötigt man folgende Bibliotheken und Module
 \label{tab:Bibliotheken}
 \end{table}
 
+\begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
+Die Tabelle \ref{tab:Bibliotheken} ist eine Liste aller notwendigen Module,
+die zur Ausführung von \Bezeichnung\ erforderlich sind. \textbf{Bitte jetzt
+noch nicht die in der Spalte "`Quelle"' angegebenen Download-Kommandos
+ausführen!}  Sie dienen nur dem vorläufigen Überblick. Eine
+Schritt-für-Schritt-Anleitung erfolgt im folgenden Kapitel \ref{sect:Install}.
+\end{bclogo}
+
 \Bezeichnung\ selbst benötigt für seinen Betrieb nur die Module
 \Code{python-omxplayer-wrapper}, \Code{python3-dbus}, \Code{pyudev} und
 \Code{six}. Das Modul \Code{python\textbf{3}-pip} muss auf dem \RPi\ installiert
@@ -150,6 +158,7 @@ reale Tastatur verwendet werden soll, so wie auf dem Faschingswagen.
  
 
 \section{Installation von \Bezeichnung\ auf dem \RPi}
+\label{sect:Install}
 Dieser Abschnitt beschreibt die \textbf{vollständige} Installation von
 \Bezeichnung\ auf einem jungfräulichen Raspbian-System mit dem Ausgabestand
 \textit{wheezy} vom 05.05.2015, Imagedatei\\
@@ -196,13 +205,20 @@ kann ab jetzt auch mit \Code{ssh} gearbeitet werden.}
       \Code{sudo apt-get update}\\
       \Code{sudo apt-get dist-upgrade}
 \item \textbf{Kernel- und Broadcom-Firmware-Update durchführen}\\
+      \begin{bclogo}[logo = \bclampe, noborder = true]{Hinweis}
+      Das hier beschriebene Kernel- und Firmwareupdate war bei meiner
+      ursprünglichen \textit{wheezy}-Installation erforderlich. Beim aktuellen
+      \textit{jessie}-Image sollte es nicht mehr notwendig sein. Generell birgt
+      jedes Kernel- und Firmware-Update in sich das Risiko, neue Probleme zu
+      verursachen und sollte möglichst vermieden werden.
+      \end{bclogo}
+
       \Code{uname -a} \# liefert die aktuelle Kernel-Version, \zB:\\
       \prompt{Linux raspberrypi 3.18.11+ #781 PREEMPT Tue Apr 21 18:02:18 BST 2015 armv6l GNU/Linux}\\
       \Code{vcgencmd version} \# liefert die aktuelle Firmware-Version, \zB:\\
       \prompt{Apr 21 2015 14:42:19\\
               Copyright (c) 2012 Broadcom\\
               version 2d5ad04b63af4233440c3f7c8587108223201102 (clean) (release)}\\
-\newpage
       Update durchführen:\\
       \Code{sudo apt-get install rpi-update}\\
       \Code{sudo rpi-update}\\
@@ -233,6 +249,7 @@ HDMI-Einstellungen in der Datei \filenam{/boot/config.txt} anzupassen.
       \end{figure}
       \\Den beiden Ausgaben kann man die optimale Auflösung entnehmen:
       Im Beispiel aus Abbildung \ref{fig:tvservice} handelt es sich um den Modus 81 aus der HDMI-Gruppe DMT
+\newpage
 \item \textbf{Editieren der Datei \filenam{/boot/config.txt}}\\
       Eintrag \Code{hdmi\_group=2} \# CEA = Gruppe 1 / DMT = Gruppe 2\\
       Eintrag \Code{hdmi\_mode=81} \# 1366x768 Pixel\\
@@ -309,7 +326,7 @@ HDMI-Einstellungen in der Datei \filenam{/boot/config.txt} anzupassen.
 
 \begin{bclogo}[logo = \bclampe, noborder = true]{Es ist so weit!}
 Jetzt ist der Zeitpunkt gekommen, die neu installierte Software
-\textbf{\Bezeichnung} auszuprobieren \smiley{smile}. Geben Sie im
+\textbf{\Bezeichnung} auszuprobieren \smiley{smile}. Geben Sie dazu im
 Terminalfenster bitte folgende Kommandos ein:\\
 \Code{cd /home/pi/bauwong} \textit{\# Da sollten Sie sich bereits befinden!}\\
 \Code{./bauwong.py}\\

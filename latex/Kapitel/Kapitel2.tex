@@ -74,7 +74,7 @@ aufgeführt.
 \hline
 1 & amazon & Ligawo 6518725 & Ligawo 6518725 HDMI Extractor\\
 \hline
-1 & www.raspiprojekt.de & 35001 & \RPi\ Modell B+\\
+1 & \url{www.raspiprojekt.de} & 35001 & \RPi\ Modell B+\\
 \hline
 1 & reichelt & GOO 44009 & 5V-USB-Netzteil, 2A (USB-Ladeadapter)\\
 \hline
@@ -110,16 +110,15 @@ aufgeführt.
 
 \newpage
 \section{Ausblick und mögliche Verbesserungen}
-Die hier beschriebene Umsetzung ist lediglich als Anregung zu verstehen: Es
-wurde hier ganz bewusst auf eine massive Bauweise gesetzt und hinsichtlich der
-mechanischen Beanspruchung für die geplante Anwendung (Faschingswagen!) auf
-robuste Komponenten wie ein industrielles Touchpanel Wert gelegt. Das Innenleben
-hinter dem Touchpanel im Holzrahmen konnte dann entsprechend filigraner
-umgesetzt werden.\\
+Die hier beschriebene Umsetzung ist lediglich als Anregung zu verstehen: Wegen
+der geplanten Anwendung auf einem Faschingswagen wurde hier ganz bewusst auf
+eine massive Bauweise mit einem stabilen Holzrahmen und einem industriellen
+Touchpanel als Front gesetzt. Das Innenleben (\RPi\ etc.) konnte dann
+relativ problemlos eingebaut werden.\\
 Je nach Verwendung und Einsatzort eignet sich allerdings jedes beliebige andere
 Display mit HDMI-Anschluss mit einer Auflösung von mindestens 1366x768 Pixeln.
 Anstelle der Touchfunktionalität können auch eine ganz normale Tastatur und
-Maus benutzt werden.
+Maus für die Bedienung benutzt werden.
 
 Nachdem zunächst geplant war, eine 230V-Stromversorgung über ein am Bulldog
 angeschlossenes Zapfwellenaggregat herzustellen und mit großen Verstärkern zu
@@ -168,10 +167,11 @@ selbst ich schon drei aufeinanderfolgende fehlgeschlagene Boots erlebt habe.
 Möglicherweise könnte diese Einschaltreihenfolge mit einem Mikrocontroller
 automatisiert werden.
 \item \textbf{Sauberes Herunterfahren / USV}\\
-Die obige Mikrocontrollerschaltung könnte so erweitert werden, dass beim
-Ausschalten die Stromversorgung zum \RPi\ erst dann getrennt wird, wenn dieser
-vollständig heruntergefahren ist. Alternativ wäre der Einbau einer USV für den
-\RPi\ noch eine Option, siehe \url{http://www.piusv.de}
+Die im vorherigen Punkt vorgeschlagene Mikrocontrollerschaltung könnte so
+erweitert werden, dass beim Ausschalten die Stromversorgung zum \RPi\ erst dann
+ getrennt wird, wenn dieser vollständig heruntergefahren ist. Alternativ wäre
+der Einbau einer USV für den \RPi\ noch eine Option, siehe
+\url{http://www.piusv.de} oder \url{http://www.s-usv.de}
 \item \textbf{\RPi\ Modell A oder Pi Zero verwenden}
 Wenn das verwendete Display einen eingebauten USB-Hub hat (so wie mein
 Siemens-Panel), kann auch ein \RPi-Modell mit nur einer USB-Buchse verwendet
@@ -185,7 +185,7 @@ Da bringe ich dann endlich meinen \RPi\ Modell A+ sinnvoll unter.
 \section{Bilder vom Aufbau}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.67\textwidth]{RPi_YAMuPlay_Frontansicht.JPG}
+\includegraphics[width=0.6\textwidth]{RPi_YAMuPlay_Frontansicht.JPG}
 \caption{Frontansicht}
 \label{fig:Frontansicht}
 \end{figure}
